@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meghívó</title>
+
+<!-- Preload images -->
+<link rel="preload" href="Closed_LEFT.png" as="image">
+<link rel="preload" href="Opened_LEFT.png" as="image">
+<link rel="preload" href="Closed_RIGHT.png" as="image">
+<link rel="preload" href="Opened_RIGHT.png" as="image">
+<link rel="preload" href="Opened_MID.png" as="image">
+
+<style>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  perspective: 2000px;
+  background-image: url('https://www.trulyengaging.com/stores/html/weddings/images/wallpapers/TrulyEngaging_MrMrsSign_2732x2048.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Prevent text selection and blinking cursor */
+.card, .card * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  outline: none;
+}
+
+/* Card container */
+.card {
+  position: relative;
+  width: 72vw;          /* 20% smaller than 90vw */
+  max-width: 440px;     /* 20% smaller than 550px */
+  aspect-ratio: 1/2;    /* maintains height proportional to width */
+  cursor: pointer;
+  transform-style: preserve-3d;
+  border-radius: 10px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Left & right doors */
+.left-door, .right-door {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+  pointer-events: none;
+}
+
+.left-door {
+  left: 0;
+  transform-origin: left;
+}
+
+.right-door {
+  right: 0;
+  transform-origin: right;
+}
+
+/* Door faces */
+.door-front, .door-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  backface-visibility: hidden;
+}
+
+.left-door .door-front { background-image: url('Closed_LEFT.png'); }
+.left-door .door-back { background-image: url('Opened_LEFT.png'); transform: rotateY(180deg); }
+.right-door .door-front { background-image: url('Closed_RIGHT.png'); }
+.right-door .door-back { background-image: url('Opened_RIGHT.png'); transform: rotateY(180deg); }
+
+/* Middle panel */
+.middle-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('Opened_MID.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Open state */
+.card.open .left-door { transform: rotateY(-180deg); }
+.card.open .right-door { transform: rotateY(180deg); }
+.card.open .middle-panel {
+  opacity: 1;
+  pointer-events: auto;
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <div class="left-door">
+    <div class="door-front"></div>
+    <div class="door-back"></div>
+  </div>
+  <div class="right-door">
+    <div class="door-front"></div>
+    <div class="door-back"></div>
+  </div>
+  <div class="middle-panel"></div>
+</div>
+
+<script>
+const card = document.getElementById('card');
+card.addEventListener('click', () => {
+  card.classList.toggle('open');
+});
+</script>
+
+</body>
+</html>
+
+
+
